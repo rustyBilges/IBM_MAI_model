@@ -986,7 +986,6 @@ class Ecosystem():
     
     
     def _update_realised_network(self, prey, predator):
-        x=0
 	if not prey.species_id in self.realised_net.nodes():
             node_data = self.net.node[prey.species_id]
             self.realised_net.add_node(prey.species_id, attr_dict=node_data)

@@ -57,10 +57,7 @@ class NetworkCreator():
         predators = int(math.floor(S*TOP_PREDATORS))
         current_predators = 0    
 
-	check_i = 0
         while self.net.size() == 0 or not nx.is_connected(self.net.to_undirected()) or current_producers < producers or current_herbivores < herbivores or current_predators < predators: #or max(self.net.get_shortest_chain_length().values()) < 3:
-	    print(check_i)
-	    check_i += 1
             self.net.clear()
 #            self.invaders = []
             

@@ -585,107 +585,107 @@ class Network(nx.DiGraph):
         self.total_number_paths = 0
         
         #we remove the self loops in nodes in order to prevent infinite recursion
-        has_loops = False
-        if self.number_of_selfloops() > 0:
-            loops = self.selfloop_edges(data=True)
-            self.remove_edges_from(loops)
-            has_loops = True
-        
-        if self.number_of_nodes() == 0 or self.size() == 0:
-            return trophic_positions, number_of_paths, overall_mean_length
-        
+        #has_loops = False
+        #if self.number_of_selfloops() > 0:
+        #    loops = self.selfloop_edges(data=True)
+        #    self.remove_edges_from(loops)
+        #    has_loops = True
+        #
+        #if self.number_of_nodes() == 0 or self.size() == 0:
+        #    return trophic_positions, number_of_paths, overall_mean_length
+       # 
         #if there are cycles we have to break them before the topological sort
-        has_cycles = False
+        #has_cycles = False
 
 	#updated to fix conflict between networkx versions
 	# nx1.7 returns cycles as list, nx1.9 returns a generator
-	if nx.__version__=='1.7': 
-            cycles = nx.algorithms.cycles.simple_cycles(self)
-	else:
-	    cycles = list(nx.algorithms.cycles.simple_cycles(self))
+	#if nx.__version__=='1.7': 
+        #    cycles = nx.algorithms.cycles.simple_cycles(self)
+	#else:
+	#    cycles = list(nx.algorithms.cycles.simple_cycles(self))
 
-        if len(cycles) > 0:
-            has_cycles = True
-            removed_edges_cycles = []
-            for c in cycles:
-                removed_edges_cycles.append((c[0], c[1]))
-                
-            self.remove_edges_from(removed_edges_cycles)
-        
+        #if len(cycles) > 0:
+        #    has_cycles = True
+        #    removed_edges_cycles = []
+        #    for c in cycles:
+        #        removed_edges_cycles.append((c[0], c[1]))
+        #        
+        #    self.remove_edges_from(removed_edges_cycles)
+        #
         #obtain the topological order to make more efficient the calculation
-        top_order_nodes = nx.topological_sort(self) 
-        paths = dict()
-        
+        #top_order_nodes = nx.topological_sort(self) 
+        #paths = dict()
+        #
         #we obtain the basal species, from which all the paths will be constructed
-        basals = set()
-        for n in self.nodes():
-            if self.in_degree(n) == 0 and self.out_degree(n) > 0:
-                basals.add(n)
-                trophic_positions[n] = 1.0
-                number_of_paths[n] = 0 
-                paths[n] = [[n]]
+        #basals = set()
+        #for n in self.nodes():
+        #    if self.in_degree(n) == 0 and self.out_degree(n) > 0:
+        #        basals.add(n)
+        #        trophic_positions[n] = 1.0
+        #        number_of_paths[n] = 0 
+        #        paths[n] = [[n]]
         
         #finding all the paths to all of the nodes from the base
-        for n in top_order_nodes:
-            if n in basals:
-                continue
-            paths[n] = []
-            
-            predecs = self.predecessors(n)
-            
-            for predecessor in predecs:
-                if len(paths[predecessor]) == 0:
-                    all_pred_paths = []
-                    for b in basals:
-                        pred_paths = self.find_all_paths(b,predecessor)
-                        all_pred_paths += pred_paths
-                    paths[predecessor] = all_pred_paths
-                    
-                pred_paths = paths[predecessor]
-                    
-                for p in pred_paths:
-                    p_new = p + [n]
-                    paths[n].append(p_new)
-        
-            mean_length = 0
-            number_of_paths[n] = len(paths[n])
-            if number_of_paths[n] == 0:
-                trophic_positions[n] = 0
-                continue
-                
-            for path in paths[n]:
-                mean_length += len(path)-1
-                
-            overall_mean_length += mean_length
-            overall_number_of_paths += number_of_paths[n]
-            
-            trophic_positions[n] = (float(mean_length)/float(number_of_paths[n])) + 1
-            
-        if overall_number_of_paths == 0:
-            overall_mean_length = 0
-        else:
-            overall_mean_length = float(overall_mean_length)/float(overall_number_of_paths)
-        
-        self.total_number_paths = overall_number_of_paths
-        
-        for sp in paths.keys():
-            if sp in basals:
-                continue
-            for path in paths[sp]:
-                self.path_length_variance += ((len(path)-1) - overall_mean_length)**2
-        
-        if self.total_number_paths == 0:
-            self.path_length_variance = 0.0
-        else:
-            self.path_length_variance = self.path_length_variance/self.total_number_paths
-        self.path_length_sd = math.sqrt(self.path_length_variance)
-        
-        if has_loops:
-            self.add_edges_from(loops)
-        
-        if has_cycles:
-            self.add_edges_from(removed_edges_cycles)
-        
+        #for n in top_order_nodes:
+        #    if n in basals:
+        #        continue
+        #    paths[n] = []
+        #    
+        #    predecs = self.predecessors(n)
+        #    
+        #    for predecessor in predecs:
+        #        if len(paths[predecessor]) == 0:
+        #            all_pred_paths = []
+        #            for b in basals:
+        #                pred_paths = self.find_all_paths(b,predecessor)
+        #                all_pred_paths += pred_paths
+        #            paths[predecessor] = all_pred_paths
+        #            
+        #        pred_paths = paths[predecessor]
+        #            
+        #        for p in pred_paths:
+        #            p_new = p + [n]
+        #            paths[n].append(p_new)
+        #
+        #    mean_length = 0
+        #    number_of_paths[n] = len(paths[n])
+        #    if number_of_paths[n] == 0:
+        #        trophic_positions[n] = 0
+        #        continue
+        #        
+        #    for path in paths[n]:
+        #        mean_length += len(path)-1
+        #        
+        #    overall_mean_length += mean_length
+        #    overall_number_of_paths += number_of_paths[n]
+        #    
+        #    trophic_positions[n] = (float(mean_length)/float(number_of_paths[n])) + 1
+        #    
+        #if overall_number_of_paths == 0:
+        #    overall_mean_length = 0
+        #else:
+        #    overall_mean_length = float(overall_mean_length)/float(overall_number_of_paths)
+       # 
+        #self.total_number_paths = overall_number_of_paths
+        #
+        #for sp in paths.keys():
+        #    if sp in basals:
+        #        continue
+        #    for path in paths[sp]:
+        #        self.path_length_variance += ((len(path)-1) - overall_mean_length)**2
+       # 
+       # if self.total_number_paths == 0:
+        #    self.path_length_variance = 0.0
+        #else:
+        #    self.path_length_variance = self.path_length_variance/self.total_number_paths
+        #self.path_length_sd = math.sqrt(self.path_length_variance)
+        #
+        #if has_loops:
+        #    self.add_edges_from(loops)
+       # 
+       # if has_cycles:
+       #     self.add_edges_from(removed_edges_cycles)
+       # 
         return trophic_positions, number_of_paths, overall_mean_length
 
     def get_path_length_feats(self):

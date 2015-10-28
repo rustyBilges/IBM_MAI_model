@@ -2,7 +2,7 @@ ROWS = 200
 
 COLUMNS = 200
 
-ITERATIONS = 50000 #5000
+ITERATIONS = 1000#50000 #5000
 
 #percentage of occupied cells by living organisms in the environment
 OCCUPIED_CELLS = 0.4
@@ -26,7 +26,7 @@ ITERATIONS_TO_RECORD = 0.1
 NETWORK_RESET = 0.1
 
 #whether to calculate the metrics for quantifying spatial variation among species
-SPATIAL_VARIATION = True
+SPATIAL_VARIATION = False
 
 RECORD_SPATIAL_VAR = 5000 #500
 
@@ -35,7 +35,7 @@ RECORD_SPATIAL_VAR = 5000 #500
 DISPERSAL_KERNEL = 0.03
 
 ##whether to calculate the interaction strengths matrices
-INT_STRENGTHS = False #True
+INT_STRENGTHS = True
 
 #fraction of primary producer species in the network
 PRIMARY_PRODS = 0.25

@@ -24,13 +24,13 @@ if __name__ == '__main__':
     start_sim = datetime.now()
     
     ##### these modifications are performed so different replicates can be run on the cluster
-    #job = '1' #os.environ['JOB_ID'];
-    #task = '1' #os.environ['SGE_TASK_ID'];   CHANGE!
-    
-    job = os.environ['PBS_JOBID'];
+    #job = '1'  ## Manually set these values 
+    #task = '1'    
+    job = os.environ['PBS_JOBID'];  ## Take values from Blue Crystal job ref.
     job = job[0:7]
     task = os.environ['PBS_ARRAYID'];
-    #output_dir = '../'
+    
+    #output_dir = '../'  ## Use this option if running locally with src directory. (Not batch submission)
     output_dir = './' + job + '_' + task;
 
     if not os.path.exists(output_dir):
@@ -39,31 +39,34 @@ if __name__ == '__main__':
     if (os.path.isfile('./output/'+SRC_NET_FILE)):
         shutil.copy('./output/'+SRC_NET_FILE, output_dir)
     ##############################################
-    
+    # we now make sure that links between TL 0 and 3 are removed for any network, both those read from file and those created on the fly.  
     
     #network_file = output_dir+'/'+SRC_NET_FILE
     network_file = output_dir + '/new_network_%d.graphml' %(int(task)-1)
-    #if True:
+    
     if READ_FILE_NETWORK:
         graph = nx.read_graphml(network_file)
         net = Network(graph)
-        
-        print 'connectance = ', net.connectance()
-        
-        tls = net.get_trophic_levels()
-        
-        top, top_preds = net.top_predators()
-        basal, basal_sps = net.basal()
-        for u,v in net.edges():
-            if u in basal_sps and v in top_preds and tls[v] == 3:
-                net.remove_edge(u,v)
-                
-        print 'new connectance = ', net.connectance()
     else:
         net = obtain_interactions_network()
+    
+    print 'connectance = ', net.connectance()
+        
+    tls = net.get_trophic_levels()
+        
+    top, top_preds = net.top_predators()
+    basal, basal_sps = net.basal()
+    for u,v in net.edges():
+        if u in basal_sps and v in top_preds and tls[v] == 3:
+            net.remove_edge(u,v)
+                
+    print 'new connectance = ', net.connectance()
+
+    if not READ_FILE_NETWORK:
         net_to_save = net.copy()
         nx.write_graphml(net_to_save, network_file)
     
+    ##############################################
     ecosystem = Ecosystem(net, drawing=False)
     ecosystem.initialise_world(True)
 
@@ -72,18 +75,17 @@ if __name__ == '__main__':
     dict_stats = get_eco_state_row(0, ecosystem)
     series_counts[0] = ecosystem.populations
 
-    # we don't this to store data, just for its keys!
+    # we don't this to store data, just for its keys
     cumulative_sps_stats = dict.fromkeys(net.nodes(), None)
 
        
+    ##############################################
     for i in range(1, ITERATIONS+1):
         print i
         ecosystem.update_world()
                                             
         
-    #dict_stats = get_eco_state_row(ITERATIONS, ecosystem)
     	dict_stats = get_eco_state_row(ITERATIONS, ecosystem)
-    #series_counts[1] = ecosystem.populations
     	series_counts[i] = ecosystem.populations
 
         if HABITAT_LOSS and i == HABITAT_LOSS_ITER:
@@ -95,6 +97,7 @@ if __name__ == '__main__':
     		write_adjacency_matrix(i, NETWORK_RECORD, series, net_temp, output_dir)
     		write_spatial_state(ecosystem, i, output_dir)
    
+    ##############################################
 ### OUTPUT:
     ## testing output of adjacency and spatial state. Do they require more than the following?
     #net_temp = ecosystem.realised_net.copy()

@@ -760,10 +760,10 @@ def write_spatial_analysis(ecosystem, iteration, output_dir='../output'):
     file_spatial.close()
 
 def write_spatial_state(ecosystem, iteration, output_dir='../output'):
-# method added to record the spatial state of the system 
-# called on same iteration as above method
-# records: output_inhabitant_ITERATION#.csv and output_visitor_ITERATION#.csv
-# which contain ROWSxCOLUMNS matrices with -1 -> no species present, otherwise entry=speciesID number  
+	""" method added to record the spatial state of the system 
+	records: output_inhabitant_ITERATION#.csv and output_visitor_ITERATION#.csv
+	which contain ROWSxCOLUMNS matrices with -1 -> no species present, otherwise entry=speciesID number  
+	"""
     filename_inhabitant = output_dir+'/output_inhabitant_'+ str(iteration) +'.csv'
     filename_visitor = output_dir+'/output_visitor_'+ str(iteration) +'.csv'
 
