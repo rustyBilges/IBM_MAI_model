@@ -314,6 +314,8 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
     #populations stability measures
     ### we look only at the stability in terms of individuals per species since it does not make much sense
     ### to look at changes in overall numbers of individuals since it is not biomass (we cannot obtain biomass change)
+
+    space = False  # only set to True below if required.
     if series_counts == '' or offset == 0:
         out_row['stable'] = '';
         out_row['mean_cv'] = '';
