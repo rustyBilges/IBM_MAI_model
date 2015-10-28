@@ -392,16 +392,15 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
             mean_cv_area = numpy.mean(cvs_areas);
             mean_cv_density = numpy.mean(cvs_densities);
             mean_cv_centroids = numpy.mean(numpy.array(cvs_centroids), axis=0);
-            
-            out_row['mean_cv_area'] = mean_cv_area;
-            out_row['mean_cv_density'] = mean_cv_density;
-            out_row['mean_cv_centroid'] = mean_cv_centroids;
-        else: 
-            
-            out_row['mean_cv_area'] = 'NA'
-            out_row['mean_cv_density'] = 'NA'
-            out_row['mean_cv_centroid'] = 'NA'
-            
+        else:
+            mean_cv_area = 'NA'
+            mean_cv_density = 'NA'
+            mean_cv_centroids = 'NA'
+    
+        out_row['mean_cv_area'] = mean_cv_area;
+        out_row['mean_cv_density'] = mean_cv_density;
+        out_row['mean_cv_centroid'] = mean_cv_centroids;
+                    
         if mean_cv_area <= 0.1 and mean_cv_density <= 0.1 and mean_cv_centroids[0] <= 0.1 and mean_cv_centroids[1] <= 0.1:
             out_row['spatially_stable'] = True;
         else:
