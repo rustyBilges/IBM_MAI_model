@@ -88,7 +88,7 @@ if __name__ == '__main__':
             net.remove_edge(u,v)
                 
     print 'new connectance = ', net.connectance()
-    if not READ_NETWORK_FILE:
+    if not READ_FILE_NETWORK:
 	net_to_save = net.copy()
         nx.write_graphml(net_to_save, network_file)
     
