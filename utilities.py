@@ -396,6 +396,11 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
             out_row['mean_cv_area'] = mean_cv_area;
             out_row['mean_cv_density'] = mean_cv_density;
             out_row['mean_cv_centroid'] = mean_cv_centroids;
+        else: 
+            
+            out_row['mean_cv_area'] = 'NA'
+            out_row['mean_cv_density'] = 'NA'
+            out_row['mean_cv_centroid'] = 'NA'
             
         if mean_cv_area <= 0.1 and mean_cv_density <= 0.1 and mean_cv_centroids[0] <= 0.1 and mean_cv_centroids[1] <= 0.1:
             out_row['spatially_stable'] = True;
