@@ -118,7 +118,7 @@ class NetworkCreator():
             top, top_preds = self.net.top_predators()
             basal, basal_sps = self.net.basal()
 	    basal_to_top_links = 0
-            for u,v in net.edges():
+            for u,v in self.net.edges():
                 if u in basal_sps and v in top_preds and tls[v] == 3:
                     basal_to_top_links += 1
             

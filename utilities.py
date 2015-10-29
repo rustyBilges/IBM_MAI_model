@@ -361,7 +361,11 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
             mean = numpy.mean(current_sps);
             sd = numpy.std(current_sps);
         
-            cvs.append(sd/mean);   ## this gives div0 warning if species population is zero during whole window.
+	    if mean==0.0:
+		cvs.append('NA')
+	    else:	
+            	cvs.append(sd/mean);
+		
             
             if space:
                 current_dens = numpy.array(current_sps_sp)/numpy.array(current_ars)
