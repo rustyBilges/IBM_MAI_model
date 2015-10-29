@@ -115,11 +115,12 @@ class NetworkCreator():
 		    to_replace.append((u,v))
        
 	    for pair in to_replace:
-		new_u = basal_sps[0]
+		new_u = pair[1]
 		while new_u in basal_sps or new_u==pair[1]:
 			new_u = np.random.randint(60)
 		self.net.add_edge(new_u, pair[1]) 
             
+	    # calculations to check trophic constraints:
             current_herbivores = 0
             current_producers = 0
             current_predators = 0
