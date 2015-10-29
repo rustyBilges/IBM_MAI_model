@@ -119,7 +119,7 @@ class NetworkCreator():
 	    for pair in to_replace:
 		new_u = pair[1]
 		while new_u in basal_sps or new_u==pair[1]:
-			new_u = np.random.randint(60)
+			new_u = np.random.randint(1,61)     # species indexing starts at 1
 		self.net.add_edge(new_u, pair[1]) 
             
 	    # calculations to check trophic constraints:
