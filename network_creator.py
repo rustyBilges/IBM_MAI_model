@@ -57,7 +57,9 @@ class NetworkCreator():
         predators = int(math.floor(S*TOP_PREDATORS))
         current_predators = 0    
 
-        while self.net.size() == 0 or not nx.is_connected(self.net.to_undirected()) or current_producers < producers or current_herbivores < herbivores or current_predators < predators: #or max(self.net.get_shortest_chain_length().values()) < 3:
+	basal_to_top_links = 1  ## New constraint that this must be zero!
+
+        while self.net.size() == 0 or not nx.is_connected(self.net.to_undirected()) or current_producers < producers or current_herbivores < herbivores or current_predators < predators or basal_to_top_links != 0: #or max(self.net.get_shortest_chain_length().values()) < 3:
             self.net.clear()
 #            self.invaders = []
             
@@ -111,6 +113,14 @@ class NetworkCreator():
                     current_producers += 1
                 elif tls[k] == 3:
                     current_predators += 1
+
+	    # new constraint:
+            top, top_preds = self.net.top_predators()
+            basal, basal_sps = self.net.basal()
+	    basal_to_top_links = 0
+            for u,v in net.edges():
+                if u in basal_sps and v in top_preds and tls[v] == 3:
+                    basal_to_top_links += 1
             
         return self.net
             
