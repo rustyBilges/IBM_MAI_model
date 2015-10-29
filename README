@@ -25,9 +25,9 @@ Other differences are:
 
 
 
+> Switching off spatial analysis no longer causes crash. This was a big problem since thiese analyses method were so slow (could probably be optimised?). However setting the flag SPATIAL_VARIATION = False caused the program to crash in calls to  get_out_row() because certain variables were instantiated in conditonal clauses that did not execute when spatial analysis was switched off. This has been fixed in the function  get_out_row().
 
 Other potential changes are:
-> switching off spatial analysis causes crash
 
 > _update_realised_network() is still called on every move() and eat() event.
 	Removing these calls gives further speed up (fewer networkx calls), but does not allow us ot work with the realised network.

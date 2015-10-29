@@ -315,7 +315,7 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
     ### we look only at the stability in terms of individuals per species since it does not make much sense
     ### to look at changes in overall numbers of individuals since it is not biomass (we cannot obtain biomass change)
 
-    space = False  # only set to True below if required.
+    space = False  # only set to True below if required. (fixes bug form previous version)
     if series_counts == '' or offset == 0:
         out_row['stable'] = '';
         out_row['mean_cv'] = '';
@@ -361,7 +361,7 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
             mean = numpy.mean(current_sps);
             sd = numpy.std(current_sps);
         
-            cvs.append(sd/mean);
+            cvs.append(sd/mean);   ## this gives div0 warning if species population is zero during whole window.
             
             if space:
                 current_dens = numpy.array(current_sps_sp)/numpy.array(current_ars)
@@ -393,7 +393,7 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
             mean_cv_density = numpy.mean(cvs_densities);
             mean_cv_centroids = numpy.mean(numpy.array(cvs_centroids), axis=0);
         else:
-            mean_cv_area = 'NA'
+            mean_cv_area = 'NA'            # this fixes the fact that these were not asigned previously when space=False
             mean_cv_density = 'NA'
             mean_cv_centroids = 'NA'
     
