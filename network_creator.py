@@ -5,6 +5,7 @@ Created on Aug 3, 2011
 '''
 
 import math
+import numpy as np
 from random import Random, randrange, choice, sample
 import itertools
 
@@ -103,6 +104,7 @@ class NetworkCreator():
             self._create_links_based_on_fundamental_niche()
 
 
+            tls = self.net.get_trophic_levels()
 	    # replacement of links between trophic levels 0 and 3 (does not conform to niches):
             top, top_preds = self.net.top_predators()
             basal, basal_sps = self.net.basal()
@@ -124,7 +126,6 @@ class NetworkCreator():
             current_herbivores = 0
             current_producers = 0
             current_predators = 0
-            tls = self.net.get_trophic_levels()
             for k in tls.keys():
                 if tls[k] == 1:
                     current_herbivores += 1 
