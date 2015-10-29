@@ -361,10 +361,7 @@ def get_out_row(iteration, net, series_counts, offset, centroids, areas):
             mean = numpy.mean(current_sps);
             sd = numpy.std(current_sps);
         
-	    if mean==0.0:
-		cvs.append('NA')
-	    else:	
-            	cvs.append(sd/mean);
+            cvs.append(sd/mean);  ## this gives a warning when species is extinct during window
 		
             
             if space:
