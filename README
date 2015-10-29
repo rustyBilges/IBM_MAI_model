@@ -27,6 +27,9 @@ Other differences are:
 
 > Switching off spatial analysis no longer causes crash. This was a big problem since thiese analyses method were so slow (could probably be optimised?). However setting the flag SPATIAL_VARIATION = False caused the program to crash in calls to  get_out_row() because certain variables were instantiated in conditonal clauses that did not execute when spatial analysis was switched off. This has been fixed in the function  get_out_row().
 
+> Network creator allowed for links between trophic levels 1 and 4. We now protoype a method for replace these links...
+
+
 Other potential changes are:
 
 > _update_realised_network() is still called on every move() and eat() event.
