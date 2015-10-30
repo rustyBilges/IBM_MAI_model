@@ -153,7 +153,7 @@ if __name__ == '__main__':
                 NetStats(out, net_temp, i, NETWORK_RECORD, series_counts, INT_STRENGTHS, output_dir, centroids_counts, areas_counts)
             else:
                 NetStats(out, net_temp, i, NETWORK_RECORD, series_counts, INT_STRENGTHS, output_dir)
-            	write_spatial_state(ecosystem,i, output_dir)  ## save the spatial state of the system in the case the SPATIAL_VARIATION is switched off.
+            	write_spatial_state(ecosystem,i, output_dir)  ## save the spatial state of the system in the case that SPATIAL_VARIATION is switched off.
             
             ecosystem.clear_realised_network()
         
