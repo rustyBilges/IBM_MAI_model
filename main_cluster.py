@@ -153,6 +153,7 @@ if __name__ == '__main__':
                 NetStats(out, net_temp, i, NETWORK_RECORD, series_counts, INT_STRENGTHS, output_dir, centroids_counts, areas_counts)
             else:
                 NetStats(out, net_temp, i, NETWORK_RECORD, series_counts, INT_STRENGTHS, output_dir)
+            	write_spatial_state(ecosystem,i, output_dir)  ## save the spatial state of the system in the case the SPATIAL_VARIATION is switched off.
             
             ecosystem.clear_realised_network()
         
@@ -163,7 +164,7 @@ if __name__ == '__main__':
         if SPATIAL_VARIATION and (i%RECORD_SPATIAL_VAR == 0 or i == ITERATIONS):
             start = datetime.now()
             write_spatial_analysis(ecosystem, i, output_dir)
-            write_spatial_state(ecosystem,i, output_dir)
+            #write_spatial_state(ecosystem,i, output_dir)
             stop = datetime.now()
             elapsed = stop-start
             print elapsed

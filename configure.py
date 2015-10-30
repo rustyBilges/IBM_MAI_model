@@ -2,7 +2,7 @@ ROWS = 200
 
 COLUMNS = 200
 
-ITERATIONS = 1000#50000 #5000
+ITERATIONS = 5000 #50000 #5000
 
 #percentage of occupied cells by living organisms in the environment
 OCCUPIED_CELLS = 0.4
