@@ -1,0 +1,46 @@
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key attr.name="mut_prod" attr.type="boolean" for="node" id="d5" />
+  <key attr.name="r" attr.type="double" for="node" id="d4" />
+  <key attr.name="n" attr.type="double" for="node" id="d3" />
+  <key attr.name="invader" attr.type="boolean" for="node" id="d2" />
+  <key attr.name="c" attr.type="double" for="node" id="d1" />
+  <key attr.name="mut" attr.type="boolean" for="node" id="d0" />
+  <graph edgedefault="directed">
+    <node id="1">
+      <data key="d0">False</data>
+      <data key="d1">0.473873463586</data>
+      <data key="d2">False</data>
+      <data key="d3">0.63233663665</data>
+      <data key="d4">0.0195357287312</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="2">
+      <data key="d0">False</data>
+      <data key="d1">0.00629197179763</data>
+      <data key="d2">False</data>
+      <data key="d3">0.105120424916</data>
+      <data key="d4">0.00894435302823</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="3">
+      <data key="d0">False</data>
+      <data key="d1">0.00629197179763</data>
+      <data key="d2">False</data>
+      <data key="d3">0.105120424916</data>
+      <data key="d4">0.00894435302823</data>
+      <data key="d5">False</data>
+    </node>
+    <node id="4">
+      <data key="d0">False</data>
+      <data key="d1">0.00629197179763</data>
+      <data key="d2">False</data>
+      <data key="d3">0.105120424916</data>
+      <data key="d4">0.00894435302823</data>
+      <data key="d5">False</data>
+    </node>
+    <edge source="1" target="3" />
+    <edge source="1" target="4" />
+    <edge source="2" target="3" />
+    <edge source="2" target="4" />
+  </graph>
+</graphml>
